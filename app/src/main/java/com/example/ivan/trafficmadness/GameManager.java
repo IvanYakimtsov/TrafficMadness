@@ -4,7 +4,9 @@ package com.example.ivan.trafficmadness;
  * Created by Ivan on 18.10.2017.
  */
 
+import android.app.usage.UsageEvents;
 import android.graphics.Canvas;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
 import java.util.List;
@@ -19,10 +21,13 @@ public class GameManager implements Runnable
     private GameData gameData;
     private double totalTime;
 
-    public GameManager(SurfaceHolder surfaceHolder, GamePanel gamePanel)
+    private GameMetrics gameMetrics;
+
+    public GameManager(SurfaceHolder surfaceHolder, GamePanel gamePanel, GameMetrics gameMetrics)
     {
         this.surfaceHolder = surfaceHolder;
         this.gamePanel = gamePanel;
+        this.gameMetrics = gameMetrics;
         this.gameData = new GameData(this);
     }
     @Override
@@ -71,12 +76,19 @@ public class GameManager implements Runnable
 
         }
     }
-    public void setRunning(boolean b)
-    {
+    public void setRunning(boolean b) {
         running=b;
+    }
+
+    public void onTouch(MotionEvent event){
+        gameData.onTouch(event);
     }
 
     public List<GameObject> getGameObjects() {
         return gameData.gameObjects;
+    }
+
+    public GameMetrics getGameMetrics() {
+        return gameMetrics;
     }
 }
