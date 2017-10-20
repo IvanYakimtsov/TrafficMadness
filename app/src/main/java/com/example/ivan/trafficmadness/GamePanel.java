@@ -4,10 +4,10 @@ package com.example.ivan.trafficmadness;
  * Created by Ivan on 18.10.2017.
  */
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -18,14 +18,16 @@ import java.util.List;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private Thread gameThread;
     private GameManager gameManager;
+    private GameActivity context;
 
-    public GamePanel(Context context, GameMetrics gameMetrics) {
+    public GamePanel(GameActivity context) {
         super(context);
+        this.context = context;
 
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
 
-        this.gameManager = new GameManager(getHolder(), this, gameMetrics);
+        this.gameManager = new GameManager(getHolder(), this);
         gameThread = new Thread(this.gameManager);
 
         //make gamePanel focusable so it can handle events
@@ -49,6 +51,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             }
             retry = false;
         }
+
+        Log.d("check","check");
 
     }
 
@@ -79,6 +83,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         for (GameObject gameObject : gameObjects) {
             gameObject.draw(canvas);
         }
+    }
+
+    public GameActivity getGameActivity() {
+        return context;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
     }
 
 }

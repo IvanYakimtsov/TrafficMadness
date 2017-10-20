@@ -1,5 +1,7 @@
 package com.example.ivan.trafficmadness;
 
+import android.graphics.Path;
+import android.graphics.Point;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -16,15 +18,29 @@ class GameData {
 
     public GameData(GameManager gameManager) {
         this.gameManager = gameManager;
+
+        List<Point> points = new ArrayList<>();
+        points.add(new Point(6,50));
+        points.add(new Point(50,50));
+        points.add(new Point(70,35));
+//        points.add(new Point(75,20));
+//        points.add(new Point(70,20));
+//        points.add(new Point(0,20));
+
+
+
         gameObjects.add(new CommonCar(2, 50
-                ,gameManager.getGameMetrics().getRelativeWidth(), gameManager.getGameMetrics().getRelativeHigh()
-                ,gameManager.getGameMetrics().getCommonCar()));
-        gameObjects.add(new CommonCar(2, 70,
-                gameManager.getGameMetrics().getRelativeWidth(), gameManager.getGameMetrics().getRelativeHigh()
-                ,gameManager.getGameMetrics().getCommonCar()));
-        gameObjects.add(new CommonCar(2, 30,
-                gameManager.getGameMetrics().getRelativeWidth(), gameManager.getGameMetrics().getRelativeHigh()
-                ,gameManager.getGameMetrics().getCommonCar()));
+                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth()
+                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeHigh()
+                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getCommonCar(),points));
+//        gameObjects.add(new CommonCar(2, 70
+//                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth()
+//                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeHigh()
+//                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getCommonCar()));
+//        gameObjects.add(new CommonCar(2, 30
+//                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth()
+//                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeHigh()
+//                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getCommonCar()));
     }
 
     public void update() {
