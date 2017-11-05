@@ -18,7 +18,7 @@ public class Navigator {
         this.routeSegments = routeSegments;
         sectionNumber = 0;
         currentSegment = this.routeSegments.get(sectionNumber);
-        currentPoint = currentSegment.getStartPosition();
+        currentPoint = currentSegment.getStartPoint();
     }
 
     public Point getPosition(float speed){

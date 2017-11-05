@@ -33,7 +33,7 @@ public class CommonCar implements Movable {
     public CommonCar(Navigator navigator, float relativeWidth, float relativeHeight, Bitmap texture) {
 
         this.width = 6 * relativeWidth;
-        this.height = 8 * relativeHeight;
+        this.height = 6 * relativeWidth;
 
         this.relativeHeight = relativeHeight;
         this.relativeWidth = relativeWidth;
@@ -70,7 +70,8 @@ public class CommonCar implements Movable {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
-        canvas.drawBitmap(texture, matrix, paint);
+      //  canvas.drawBitmap(texture, matrix, paint);
+        canvas.drawCircle(position.x,position.y,20,paint);
 
     }
 

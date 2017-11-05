@@ -1,5 +1,6 @@
 package com.example.ivan.trafficmadness;
 
+import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
@@ -23,15 +24,23 @@ class GameData {
 //        points.add(new Point(75,20));
 //        points.add(new Point(70,20));
 //        points.add(new Point(0,20));
+        float relativeWidth = gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth();
+        float relativeHeight = gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeHeight();
         List<RouteSegment> routeSegments = new ArrayList<>();
-        routeSegments.add(new Line(new Point(0,100),new Point(500,300)));
-        routeSegments.add(new Line(new Point(500,300),new Point(500,500)));
-        routeSegments.add(new Line(new Point(500,500),new Point(100,500)));
+     //   Line firstLine = new Line(new Point(0,40*relativeHeight),new Point(30*relativeWidth,40*relativeHeight));
+        Turn firstTurn = new Turn(new Point(40*relativeWidth,40*relativeHeight),7*relativeWidth,360);
+//        Line secondLine = new Line(firstTurn,new Point(firstTurn.getEndPoint().x + 20 * relativeWidth,
+//                firstTurn.getEndPoint().y));
+  //      routeSegments.add(firstLine);
+
+         routeSegments.add(firstTurn);
+
+//        routeSegments.add(secondLine);
 
 
         gameObjects.add(new CommonCar(new Navigator(routeSegments)
-                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth()
-                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeHeight()
+                ,relativeWidth
+                ,relativeHeight
                 ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getCommonCar()));
 //        gameObjects.add(new CommonCar(2, 70
 //                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth()

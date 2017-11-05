@@ -7,5 +7,6 @@ package com.example.ivan.trafficmadness;
 public interface RouteSegment {
     public Point calculatePosition(float speed);
     public boolean isEnd();
-    public Point getStartPosition();
+    public Point getStartPoint();
+    public Point getEndPoint();
 }
