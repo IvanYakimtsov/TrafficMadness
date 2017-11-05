@@ -27,21 +27,22 @@ class GameData {
         float relativeWidth = gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth();
         float relativeHeight = gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeHeight();
         List<RouteSegment> routeSegments = new ArrayList<>();
-     //   Line firstLine = new Line(new Point(0,40*relativeHeight),new Point(30*relativeWidth,40*relativeHeight));
-        Turn firstTurn = new Turn(new Point(40*relativeWidth,40*relativeHeight),7*relativeWidth,360);
-//        Line secondLine = new Line(firstTurn,new Point(firstTurn.getEndPoint().x + 20 * relativeWidth,
-//                firstTurn.getEndPoint().y));
-  //      routeSegments.add(firstLine);
+        Turn firstTurn = new Turn(new Point(30 * relativeWidth, 40 * relativeHeight), 10 * relativeWidth, -270, -360);
+        Line firstLine = new Line(new Point(0, firstTurn.calculatePosition(0).y),
+                firstTurn.calculatePosition(0));
+        Line secondLine = new Line(firstTurn.getEndPoint(),
+                new Point(firstTurn.getEndPoint().x, firstTurn.getEndPoint().y - 20 * relativeHeight));
+        routeSegments.add(firstLine);
 
-         routeSegments.add(firstTurn);
+        routeSegments.add(firstTurn);
 
-//        routeSegments.add(secondLine);
+        routeSegments.add(secondLine);
 
 
         gameObjects.add(new CommonCar(new Navigator(routeSegments)
-                ,relativeWidth
-                ,relativeHeight
-                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getCommonCar()));
+                , relativeWidth
+                , relativeHeight
+                , gameManager.getGamePanel().getGameActivity().getGameMetrics().getCommonCar()));
 //        gameObjects.add(new CommonCar(2, 70
 //                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeWidth()
 //                ,gameManager.getGamePanel().getGameActivity().getGameMetrics().getRelativeHeight()

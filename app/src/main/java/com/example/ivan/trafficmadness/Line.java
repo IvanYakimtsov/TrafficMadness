@@ -15,12 +15,6 @@ public class Line implements RouteSegment{
         this.currentPoint = new Point(this.startPoint.x,this.startPoint.y);
     }
 
-    public Line(RouteSegment previousSegment, Point endPoint) {
-        this.startPoint = new Point(previousSegment.getEndPoint().x, previousSegment.getEndPoint().y);
-        this.endPoint = endPoint;
-        this.currentPoint = new Point(this.startPoint.x,this.startPoint.y);
-    }
-
     @Override
     public Point calculatePosition(float speed) {
         //находим длину исходного отрезка
