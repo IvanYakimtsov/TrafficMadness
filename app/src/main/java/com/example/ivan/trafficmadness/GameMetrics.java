@@ -7,26 +7,26 @@ import android.graphics.Bitmap;
  */
 
 public class GameMetrics {
-    private float relativeHigh;
+    private float relativeHeight;
     private float relativeWidth;
 
     public Bitmap commonCar;
 
-    public GameMetrics(float relativeWidth, float relativeHigh) {
+    public GameMetrics(float relativeWidth, float relativeHeight) {
         this.relativeWidth = relativeWidth;
-        this.relativeHigh = relativeHigh;
+        this.relativeHeight = relativeHeight;
     }
 
-    public void setRelativeHigh(float relativeHigh) {
-        this.relativeHigh = relativeHigh;
+    public void setRelativeHeight(float relativeHeight) {
+        this.relativeHeight = relativeHeight;
     }
 
     public void setRelativeWidth(float relativeWidth) {
         this.relativeWidth = relativeWidth;
     }
 
-    public float getRelativeHigh() {
-        return relativeHigh;
+    public float getRelativeHeight() {
+        return relativeHeight;
     }
 
     public float getRelativeWidth() {

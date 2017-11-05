@@ -54,6 +54,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         alert.show();
     }
 
+    public void onStop() {
+        super.onStop();
+        gamePanel.getGameManager().setPause(true);
+    }
+
+    public void onRestart(){
+        super.onRestart();
+        gamePanel.getGameManager().setPause(false);
+    }
+
     private AlertDialog createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Warning!")

@@ -5,55 +5,52 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.Point;
-import android.util.Log;
-
-import java.util.List;
 
 /**
  * Created by Ivan on 18.10.2017.
  */
 
-public class CommonCar implements Car {
-    private float x;
-    private float y;
-    private float high;
-    private float width;
-    private float relativeHigh;
-    private float relativeWidth;
+public class CommonCar implements Movable {
 
-    private double velocity;
-    private double currentSpeed;
-    private double averageSpeed;
+    private Point position;
+    private Navigator navigator;
+    private float height;
+    private float width;
+
+
+    private float velocity;
+    private float currentSpeed;
+    private float averageSpeed;
+    private Bitmap texture;
+
+    private float relativeHeight;
+    private float relativeWidth;
     private Matrix matrix;
 
-    private List<Point> points;
-    private int currentPointIndex = 0;
-
-    private Bitmap texture;
 
     //  private boolean isMoving = true;
 
-    public CommonCar(float x, float y, float relativeWidth, float relativeHigh, Bitmap texture, List<Point> points) {
-        this.x = x * relativeWidth;
-        this.y = y * relativeHigh;
-        this.points = points;
-        this.width = 8 * relativeWidth;
-        this.high = 8 * relativeHigh;
+    public CommonCar(Navigator navigator, float relativeWidth, float relativeHeight, Bitmap texture) {
 
-        this.relativeHigh = relativeHigh;
+        this.width = 6 * relativeWidth;
+        this.height = 8 * relativeHeight;
+
+        this.relativeHeight = relativeHeight;
         this.relativeWidth = relativeWidth;
         averageSpeed = (float) (0.5 * relativeWidth);
         currentSpeed = (float) (0.3 * relativeWidth);
         velocity = (float) (0.01 * relativeWidth);
         adjustTexture(texture);
+
+        this.position = navigator.getPosition(0);
+        this.navigator = navigator;
     }
 
     private void adjustTexture(Bitmap texture) {
         int width = texture.getWidth();
         int height = texture.getHeight();
         float scaleWidth = this.width / width;
-        float scaleHeight = this.high / height;
+        float scaleHeight = this.height / height;
         // CREATE A MATRIX FOR THE MANIPULATION
         Matrix scaleMatrix = new Matrix();
         // RESIZE THE BIT MAP
@@ -65,7 +62,7 @@ public class CommonCar implements Car {
                 texture, 0, 0, width, height, scaleMatrix, true);
 
         this.width = resizedBitmap.getWidth();
-        this.high = resizedBitmap.getHeight();
+        this.height = resizedBitmap.getHeight();
         this.texture = resizedBitmap;
     }
 
@@ -73,12 +70,7 @@ public class CommonCar implements Car {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
-        paint.setStyle(Paint.Style.FILL);
-
-        canvas.drawRect(x,y,x+width,y+high,paint);
         canvas.drawBitmap(texture, matrix, paint);
-        canvas.drawCircle(points.get(currentPointIndex).x * relativeWidth
-                ,points.get(currentPointIndex).y *relativeHigh,25,paint);
 
     }
 
@@ -91,38 +83,18 @@ public class CommonCar implements Car {
             currentSpeed += velocity;
             if (currentSpeed <= 0) currentSpeed = 0;
         }
-     //   x += currentSpeed;
-        Point point = points.get(currentPointIndex);
-        double tgX = ((point.y * relativeHigh) - y) / ((point.x*relativeWidth) - x);
-        double X = Math.atan(tgX);
-        Log.d("check","angle " + X);
-        double ySpeed = currentSpeed * Math.sin(X);
-        double xSpeed = currentSpeed * Math.cos(X);
-      //  Log.d("check","currentSpeed " + currentSpeed);
-      //  Log.d("check","angle " + X + " xSpeed "+ xSpeed + " ySpeed "+ ySpeed);
-        x += xSpeed;
-        y += ySpeed;
-        setTexturePosition(x,y,X);
-        checkPoint();
 
+        position = navigator.getPosition(currentSpeed);
+        updateTexturePosition(0);
     }
 
-    private void setTexturePosition(float x, float y, double angle){
+    private void updateTexturePosition(double angle){
         this.matrix = new Matrix();
         this.matrix.postRotate((float) angle);
-        this.matrix.postTranslate(x,y);
+        this.matrix.postTranslate(position.x,position.y);
     }
 
-    private void checkPoint() {
-       // Log.d("check","currentPoint " + currentPointIndex);
-        double radius = width;
-        if (Math.abs(x - points.get(currentPointIndex).x)<=radius
-                && Math.abs(y - points.get(currentPointIndex).x)<=radius ) {
-            if (currentPointIndex < points.size() - 1) {
-                currentPointIndex++;
-            } else  velocity = (float) (-0.01 * relativeWidth);;
-        }
-    }
+
 
     @Override
     public void changeMovingStatus() {
@@ -134,18 +106,13 @@ public class CommonCar implements Car {
     }
 
     @Override
-    public float getX() {
-        return x;
+    public Point getPosition() {
+        return position;
     }
 
     @Override
-    public float getY() {
-        return y;
-    }
-
-    @Override
-    public float getHigh() {
-        return high;
+    public float getHeight() {
+        return height;
     }
 
     @Override
