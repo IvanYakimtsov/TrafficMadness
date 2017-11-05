@@ -16,11 +16,14 @@ public class Turn implements RouteSegment {
     private Point rotationPoint;
     private Point currentPoint;
     private Point endPoint;
+    private boolean clockWise;
 
     public Turn(Point startPoint, float radius, float angle) {
         this.startPoint = startPoint;
         this.radius = radius;
-        this.angle = angle;
+        if(angle < 0) clockWise = false;
+        else clockWise = true;
+        this.angle = Math.abs(angle);
         currentAngle = 0;
 
         this.rotationPoint = new Point((startPoint.x - radius), startPoint.y);
@@ -59,10 +62,19 @@ public class Turn implements RouteSegment {
         else currentAngle += angle;
         float dx = startPoint.x - rotationPoint.x;
         float dy = startPoint.y - rotationPoint.y;
-        float cos = (float) Math.cos((Math.PI * currentAngle) /180);
-        float sin = (float) Math.sin((Math.PI * currentAngle) /180);
+        float cos;
+        float sin;
+        if(clockWise){
+             cos = (float) Math.cos((Math.PI * currentAngle) /180);
+             sin = (float) Math.sin((Math.PI * currentAngle) /180);
+        } else {
+             cos = (float) Math.cos((Math.PI * (360 - currentAngle)) /180);
+             sin = (float) Math.sin((Math.PI * (360 - currentAngle)) /180);
+        }
+
         currentPoint.x = rotationPoint.x + dx*cos - dy*sin;
         currentPoint.y = rotationPoint.y + dx*sin - dy*cos;
+
         return currentPoint;
     }
 
