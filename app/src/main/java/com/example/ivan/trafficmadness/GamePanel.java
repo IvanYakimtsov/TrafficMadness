@@ -40,6 +40,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        Log.d("check", "surfaceDestroyed");
         boolean retry = true;
         while (retry) {
             try {
@@ -52,17 +53,18 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
             retry = false;
         }
 
-        Log.d("check","check");
+     //   Log.d("check","check");
 
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
         //we can safely start the game loop
-        gameManager.setRunning(true);
-        gameThread.start();
-
+        if(!gameManager.isRunning() && gameManager.isPause()){
+            gameManager.setRunning(true);
+            gameManager.setPause(false);
+            gameThread.start();
+        }
     }
 
     @Override
@@ -83,6 +85,11 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         for (GameObject gameObject : gameObjects) {
             gameObject.draw(canvas);
         }
+
+        List<Movable> movables = gameManager.getMovableObjects();
+        for (Movable movable : movables) {
+            movable.draw(canvas);
+        }
     }
 
     public GameActivity getGameActivity() {
@@ -93,4 +100,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return gameManager;
     }
 
+    public Thread getGameThread() {
+        return gameThread;
+    }
 }

@@ -1,20 +1,32 @@
 package com.example.ivan.trafficmadness;
 
 import android.graphics.PointF;
+import android.util.Log;
 
 /**
  * Created by Ivan on 27.10.2017.
  */
 
-public class Line implements RouteSegment{
+public class Line implements RouteSegment {
     private PointF currentPoint;
     private PointF startPoint;
     private PointF endPoint;
+    private float angle;
 
     public Line(PointF startPoint, PointF endPoint) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        this.currentPoint = new PointF(this.startPoint.x,this.startPoint.y);
+        this.currentPoint = new PointF(this.startPoint.x, this.startPoint.y);
+        calculateAngle();
+    }
+
+    private void calculateAngle() {
+        //  float dx = endPoint.x - currentPoint.x;
+        //    float dy = endPoint.y - currentPoint.y;
+//        if(dx == 0) dx = 1;
+        //TODO: calculate angle here
+        if(endPoint.x < startPoint.x) angle = 180;
+        else angle = 0;
     }
 
     @Override
@@ -22,8 +34,12 @@ public class Line implements RouteSegment{
         //находим длину исходного отрезка
         float dx = endPoint.x - currentPoint.x;
         float dy = endPoint.y - currentPoint.y;
+//        if(dx == 0) dx = 1;
+//        angle = dy / dx;
+//        Log.d("check",angle+"");
+        // if(angle < 0)
         double l = Math.sqrt(dx * dx + dy * dy);
-        if(speed > l) speed = (float) l;
+        if (speed > l) speed = (float) l;
         //находим направляющий вектор
         double dirX = dx / l;
         double dirY = dy / l;
@@ -49,6 +65,11 @@ public class Line implements RouteSegment{
     @Override
     public PointF getEndPoint() {
         return endPoint;
+    }
+
+    @Override
+    public float getAngle() {
+        return angle;
     }
 
 }

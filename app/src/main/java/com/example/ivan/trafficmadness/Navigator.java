@@ -9,23 +9,27 @@ import java.util.List;
  */
 
 public class Navigator {
-    List<RouteSegment> routeSegments;
-    RouteSegment currentSegment;
+    private List<RouteSegment> routeSegments;
+    private RouteSegment currentSegment;
 
-    boolean endOfRoute = false;
-    int sectionNumber;
-    PointF currentPoint;
+    private boolean endOfRoute = false;
+    private int sectionNumber;
+    private PointF currentPoint;
+    private float angle;
 
     public Navigator(List<RouteSegment> routeSegments) {
         this.routeSegments = routeSegments;
         sectionNumber = 0;
         currentSegment = this.routeSegments.get(sectionNumber);
         currentPoint = currentSegment.getStartPoint();
+        angle = 0;
     }
 
     public PointF getPosition(float speed){
+       // angle +=10;
         if(!endOfRoute){
             currentPoint = currentSegment.calculatePosition(speed);
+            if(currentSegment.getAngle() != 0) angle = currentSegment.getAngle();
             if(currentSegment.isEnd()){
                 sectionNumber++;
                 if(sectionNumber < routeSegments.size()){
@@ -42,5 +46,9 @@ public class Navigator {
 
     public PointF getCurrentPoint() {
         return currentPoint;
+    }
+
+    public float getAngle() {
+        return angle;
     }
 }

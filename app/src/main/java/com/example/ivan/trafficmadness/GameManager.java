@@ -14,8 +14,8 @@ public class GameManager implements Runnable {
     private int FPS = 60;
     private SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
-    private boolean running;
-    private boolean pause = false;
+    private boolean running = false;
+    private boolean pause = true;
     private Canvas canvas;
     private GameData gameData;
     private double totalTime;
@@ -36,7 +36,7 @@ public class GameManager implements Runnable {
         long targetTime = 1000 / FPS;
 
         while (running) {
-            if (!pause) {
+           if (!pause) {
                 startTime = System.nanoTime();
                 canvas = null;
 
@@ -69,7 +69,7 @@ public class GameManager implements Runnable {
 
                 totalTime += System.nanoTime() - startTime;
 
-            } else Thread.yield();
+            } /*else Thread.yield()*/;
         }
     }
 
@@ -82,7 +82,10 @@ public class GameManager implements Runnable {
     }
 
     public List<GameObject> getGameObjects() {
-        return gameData.gameObjects;
+        return gameData.getGameObjects();
+    }
+    public List<Movable> getMovableObjects() {
+        return gameData.getMovables();
     }
 
     public GamePanel getGamePanel() {
@@ -91,5 +94,13 @@ public class GameManager implements Runnable {
 
     public void setPause(boolean pause) {
         this.pause = pause;
+    }
+
+    public boolean isRunning(){
+        return running;
+    }
+
+    public boolean isPause(){
+        return pause;
     }
 }

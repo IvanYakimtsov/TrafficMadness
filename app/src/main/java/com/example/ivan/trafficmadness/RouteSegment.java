@@ -11,4 +11,5 @@ public interface RouteSegment {
     public boolean isEnd();
     public PointF getStartPoint();
     public PointF getEndPoint();
+    public float getAngle();
 }

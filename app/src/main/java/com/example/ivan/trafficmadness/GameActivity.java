@@ -59,12 +59,20 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void onStop() {
         super.onStop();
-        gamePanel.getGameManager().setPause(true);
+//        gamePanel.getGameManager().setPause(true);
+//        synchronized (gamePanel){
+//            try {
+//                gamePanel.getGameThread().wait();
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
     }
 
     public void onRestart(){
         super.onRestart();
-        gamePanel.getGameManager().setPause(false);
+//        gamePanel.getGameManager().setPause(false);
+//        gamePanel.getGameThread().notify();
     }
 
     private AlertDialog createDialog() {

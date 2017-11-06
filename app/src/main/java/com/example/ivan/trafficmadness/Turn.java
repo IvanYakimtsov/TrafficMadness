@@ -92,4 +92,11 @@ public class Turn implements RouteSegment {
         return endPoint;
     }
 
+    @Override
+    public float getAngle() {
+        if(clockWise) return (currentAngle+90);
+        else return 360 - (currentAngle+90);
+      //  return 0;
+    }
+
 }
