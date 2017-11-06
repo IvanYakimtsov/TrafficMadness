@@ -1,5 +1,7 @@
 package com.example.ivan.trafficmadness;
 
+import android.graphics.PointF;
+
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ public class Navigator {
 
     boolean endOfRoute = false;
     int sectionNumber;
-    Point currentPoint;
+    PointF currentPoint;
 
     public Navigator(List<RouteSegment> routeSegments) {
         this.routeSegments = routeSegments;
@@ -21,7 +23,7 @@ public class Navigator {
         currentPoint = currentSegment.getStartPoint();
     }
 
-    public Point getPosition(float speed){
+    public PointF getPosition(float speed){
         if(!endOfRoute){
             currentPoint = currentSegment.calculatePosition(speed);
             if(currentSegment.isEnd()){
@@ -38,5 +40,7 @@ public class Navigator {
         return routeSegments;
     }
 
-
+    public PointF getCurrentPoint() {
+        return currentPoint;
+    }
 }

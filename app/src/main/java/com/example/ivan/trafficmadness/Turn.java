@@ -1,5 +1,6 @@
 package com.example.ivan.trafficmadness;
 
+import android.graphics.PointF;
 import android.util.Log;
 
 
@@ -8,17 +9,17 @@ import android.util.Log;
  */
 
 public class Turn implements RouteSegment {
-    private Point startPoint;
+    private PointF startPoint;
     private float radius;
     private float angle;
     private float currentAngle;
 
-    private Point rotationPoint;
-    private Point currentPoint;
-    private Point endPoint;
+    private PointF rotationPoint;
+    private PointF currentPoint;
+    private PointF endPoint;
     private boolean clockWise;
 
-    public Turn(Point startPoint, float radius,float startAngel,float angle) {
+    public Turn(PointF startPoint, float radius,float startAngel,float angle) {
         this.startPoint = startPoint;
         this.radius = radius;
         if(angle < 0) {
@@ -28,9 +29,9 @@ public class Turn implements RouteSegment {
         this.angle = Math.abs(angle);
         currentAngle = Math.abs(startAngel);
 
-        this.rotationPoint = new Point((startPoint.x - radius), startPoint.y);
+        this.rotationPoint = new PointF((startPoint.x - radius), startPoint.y);
 
-        this.currentPoint = new Point(startPoint.x, startPoint.y);
+        this.currentPoint = new PointF(startPoint.x, startPoint.y);
 
         calculateEndPoint();
     }
@@ -49,11 +50,11 @@ public class Turn implements RouteSegment {
             sin = (float) Math.sin((Math.PI * (360 - angle)) /180);
         }
 
-        this.endPoint = new Point(rotationPoint.x + dx*cos - dy*sin, rotationPoint.y + dx*sin - dy*cos);
+        this.endPoint = new PointF(rotationPoint.x + dx*cos - dy*sin, rotationPoint.y + dx*sin - dy*cos);
     }
 
     @Override
-    public Point calculatePosition(float speed) {
+    public PointF calculatePosition(float speed) {
         float angle = (float) ((speed * 180) / (Math.PI * radius));
 
         if (currentAngle + angle > this.angle) currentAngle = this.angle;
@@ -63,11 +64,11 @@ public class Turn implements RouteSegment {
         float cos;
         float sin;
         if(clockWise){
-             cos = (float) Math.cos((Math.PI * currentAngle) /180);
-             sin = (float) Math.sin((Math.PI * currentAngle) /180);
+            cos = (float) Math.cos((Math.PI * currentAngle) /180);
+            sin = (float) Math.sin((Math.PI * currentAngle) /180);
         } else {
-             cos = (float) Math.cos((Math.PI * (360 - currentAngle)) /180);
-             sin = (float) Math.sin((Math.PI * (360 - currentAngle)) /180);
+            cos = (float) Math.cos((Math.PI * (360 - currentAngle)) /180);
+            sin = (float) Math.sin((Math.PI * (360 - currentAngle)) /180);
         }
 
         currentPoint.x = rotationPoint.x + dx*cos - dy*sin;
@@ -82,12 +83,12 @@ public class Turn implements RouteSegment {
     }
 
     @Override
-    public Point getStartPoint() {
+    public PointF getStartPoint() {
         return startPoint;
     }
 
     @Override
-    public Point getEndPoint() {
+    public PointF getEndPoint() {
         return endPoint;
     }
 

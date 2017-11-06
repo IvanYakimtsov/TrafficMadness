@@ -13,13 +13,17 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
-    private GameMetrics gameMetrics;
+    private float relativeHeight;
+    private float relativeWidth;
+    private Bitmap commonCar;
+
+
     private GamePanel gamePanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setGameMetrics();
+        setGameParametrs();
         this.gamePanel = new GamePanel(this);
         setContentView(R.layout.activity_game);
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relative);
@@ -27,20 +31,19 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.button).setOnClickListener(this);
     }
 
-    private void setGameMetrics() {
+    private void setGameParametrs(){
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         float screenWidth = displaymetrics.widthPixels;
         float screenHeight = displaymetrics.heightPixels;
-        this.gameMetrics = new GameMetrics(screenWidth / 100, screenHeight / 100);
+        relativeWidth = screenWidth / 100;
+        relativeHeight = screenHeight / 100;
+
         Resources res = getResources();
         Bitmap bitmap = BitmapFactory.decodeResource(res, R.drawable.common_car);
-        this.gameMetrics.setCommonCar(bitmap);
+        commonCar = bitmap;
     }
 
-    public GameMetrics getGameMetrics() {
-        return gameMetrics;
-    }
 
     @Override
     public void onDestroy() {
@@ -94,5 +97,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             return false;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public float getRelativeHeight() {
+        return relativeHeight;
+    }
+
+    public float getRelativeWidth() {
+        return relativeWidth;
+    }
+
+    public Bitmap getCommonCar() {
+        return commonCar;
+    }
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
     }
 }

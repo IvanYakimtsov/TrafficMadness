@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PointF;
 
 /**
  * Created by Ivan on 18.10.2017.
@@ -12,7 +13,7 @@ import android.graphics.Paint;
 
 public class CommonCar implements Movable {
 
-    private Point position;
+  //  private PointF position;
     private Navigator navigator;
     private float height;
     private float width;
@@ -42,7 +43,7 @@ public class CommonCar implements Movable {
         velocity = (float) (0.01 * relativeWidth);
         adjustTexture(texture);
 
-        this.position = navigator.getPosition(0);
+   //     this.position = navigator.getPosition(0);
         this.navigator = navigator;
     }
 
@@ -71,7 +72,7 @@ public class CommonCar implements Movable {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
       //  canvas.drawBitmap(texture, matrix, paint);
-        canvas.drawCircle(position.x,position.y,20,paint);
+        canvas.drawCircle(navigator.getCurrentPoint().x,navigator.getCurrentPoint().y,20,paint);
 
     }
 
@@ -85,14 +86,14 @@ public class CommonCar implements Movable {
             if (currentSpeed <= 0) currentSpeed = 0;
         }
 
-        position = navigator.getPosition(currentSpeed);
+        navigator.getPosition(currentSpeed);
         updateTexturePosition(0);
     }
 
     private void updateTexturePosition(double angle){
         this.matrix = new Matrix();
         this.matrix.postRotate((float) angle);
-        this.matrix.postTranslate(position.x,position.y);
+        this.matrix.postTranslate(navigator.getCurrentPoint().x,navigator.getCurrentPoint().y);
     }
 
 
@@ -107,8 +108,8 @@ public class CommonCar implements Movable {
     }
 
     @Override
-    public Point getPosition() {
-        return position;
+    public PointF getPosition() {
+        return navigator.getCurrentPoint();
     }
 
     @Override
