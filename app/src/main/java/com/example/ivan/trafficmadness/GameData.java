@@ -19,7 +19,11 @@ class GameData {
 
     public GameData(GameManager gameManager) {
         this.gameManager = gameManager;
+        setCars();
+    }
 
+    public void setCars(){
+        movables.clear();
         float relativeWidth = gameManager.getGamePanel().getGameActivity().getRelativeWidth();
         float relativeHeight = gameManager.getGamePanel().getGameActivity().getRelativeHeight();
         List<RouteSegment> routeSegments = new ArrayList<>();
@@ -65,11 +69,8 @@ class GameData {
             for (Movable object2 : movables) {
                 if(object1 != object2){
                     if (RectF.intersects(object1.getBounds(),object2.getBounds())) {
-//                        Log.d("check", object1.getBounds().left + " object1 left");
-//                        Log.d("check", object2.getBounds().left + " object2 left");
-//                        Log.d("check", object1.getBounds().right + " object1 right");
-//                        Log.d("check", object2.getBounds().right + " object2 right");
-                        gameManager.setPause(true);
+                        gameManager.gameOver();
+                      //  setCars();
                     }
                 }
 
@@ -81,7 +82,7 @@ class GameData {
         Movable car = findCar(event.getX(), event.getY());
         //  Log.d("check", "onTouch");
         if (car != null) {
-            Log.d("check", "hit");
+           // Log.d("check", "hit");
             car.changeMovingStatus();
         }
     }

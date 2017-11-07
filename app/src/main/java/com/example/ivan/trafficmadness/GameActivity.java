@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
     private float relativeHeight;
@@ -87,7 +88,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
                                 dialog.cancel();
                             }
                         })
-                .setPositiveButton("Exit",
+                .setPositiveButton("exit",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 finish();
@@ -122,4 +123,28 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public GamePanel getGamePanel() {
         return gamePanel;
     }
+
+//    public void gameOver(){
+//        gamePanel.getGameManager().setPause(true);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("You loose!")
+//                .setMessage("Do you want to try again?")
+//                .setCancelable(false)
+//                .setNegativeButton("Yes",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                gamePanel.getGameManager().getGameData().setCars();
+//                                gamePanel.getGameManager().setPause(false);
+//                                dialog.cancel();
+//                            }
+//                        })
+//                .setPositiveButton("exit",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                finish();
+//                            }
+//                        });
+//        AlertDialog alert = builder.create();
+//        alert.show();
+//    }
 }

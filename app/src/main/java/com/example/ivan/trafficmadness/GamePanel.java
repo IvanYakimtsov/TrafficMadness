@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -70,8 +71,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         gameManager.onTouch(event);
+       // test();
         return super.onTouchEvent(event);
+
     }
+//    public void test(){
+//        Toast toast = Toast.makeText(getContext(),
+//                "Пора покормить кота!", Toast.LENGTH_SHORT);
+//        toast.show();
+//    }
 
     @Override
     public void draw(Canvas canvas) {
@@ -90,6 +98,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         for (Movable movable : movables) {
             movable.draw(canvas);
         }
+
     }
 
     public GameActivity getGameActivity() {

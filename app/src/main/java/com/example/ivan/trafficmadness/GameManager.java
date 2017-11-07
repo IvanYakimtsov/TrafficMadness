@@ -4,9 +4,12 @@ package com.example.ivan.trafficmadness;
  * Created by Ivan on 18.10.2017.
  */
 
+import android.content.DialogInterface;
 import android.graphics.Canvas;
+import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,6 +19,7 @@ public class GameManager implements Runnable {
     private GamePanel gamePanel;
     private boolean running = false;
     private boolean pause = true;
+   // private boolean isGameOver = false;
     private Canvas canvas;
     private GameData gameData;
     private double totalTime;
@@ -73,6 +77,37 @@ public class GameManager implements Runnable {
         }
     }
 
+    public void gameOver(){
+        pause = true;
+     //   gameData.setCars();
+     //   isGameOver = true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(gamePanel.getGameActivity());
+        builder.setTitle("You loose!")
+                .setMessage("Do you want to try again?")
+                .setCancelable(false)
+                .setNegativeButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                gameData.setCars();
+                                pause = false;
+                                dialog.cancel();
+                            }
+                        })
+                .setPositiveButton("exit",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                gamePanel.getGameActivity().finish();
+                            }
+                        });
+        builder.create().show();
+//        Toast toast = Toast.makeText(gamePanel.getContext(),
+//                "Пора покормить кота!", Toast.LENGTH_SHORT);
+//        toast.show();
+//        AlertDialog alert = builder.create();
+//        alert.getCurrentFocus();
+//        alert.show();
+    }
+
     public void setRunning(boolean b) {
         running = b;
     }
@@ -103,4 +138,9 @@ public class GameManager implements Runnable {
     public boolean isPause(){
         return pause;
     }
+
+    public GameData getGameData() {
+        return gameData;
+    }
+
 }
