@@ -71,7 +71,7 @@ public class CommonCar implements Movable {
     public void draw(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(Color.RED);
-        canvas.drawRect(bounds,paint);
+       // canvas.drawRect(bounds,paint);
         canvas.drawBitmap(texture, matrix, paint);
 
      //   canvas.drawCircle(navigator.getCurrentPoint().x,navigator.getCurrentPoint().y,20,paint);

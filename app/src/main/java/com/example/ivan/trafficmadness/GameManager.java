@@ -81,25 +81,25 @@ public class GameManager implements Runnable {
         pause = true;
      //   gameData.setCars();
      //   isGameOver = true;
-        AlertDialog.Builder builder = new AlertDialog.Builder(gamePanel.getGameActivity());
-        builder.setTitle("You loose!")
-                .setMessage("Do you want to try again?")
-                .setCancelable(false)
-                .setNegativeButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                gameData.setCars();
-                                pause = false;
-                                dialog.cancel();
-                            }
-                        })
-                .setPositiveButton("exit",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                gamePanel.getGameActivity().finish();
-                            }
-                        });
-        builder.create().show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(gamePanel.getGameActivity());
+//        builder.setTitle("You loose!")
+//                .setMessage("Do you want to try again?")
+//                .setCancelable(false)
+//                .setNegativeButton("Yes",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                gameData.setCars();
+//                                pause = false;
+//                                dialog.cancel();
+//                            }
+//                        })
+//                .setPositiveButton("exit",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                gamePanel.getGameActivity().finish();
+//                            }
+//                        });
+//        builder.create().show();
 //        Toast toast = Toast.makeText(gamePanel.getContext(),
 //                "Пора покормить кота!", Toast.LENGTH_SHORT);
 //        toast.show();
